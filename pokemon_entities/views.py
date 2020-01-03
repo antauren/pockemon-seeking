@@ -84,11 +84,18 @@ def show_pokemon(request, pokemon_id):
                                               'pokemon_id': pokemon.previous_evolution.id,
                                               'img_url': pokemon.previous_evolution.img_url.url
                                               }
-    if pokemon.next_evolution:
-        pokemon_dict['next_evolution'] = {'title_ru': pokemon.next_evolution.title_ru,
-                                          'pokemon_id': pokemon.next_evolution.id,
-                                          'img_url': pokemon.next_evolution.img_url.url
+
+    pokemon_next_evolutions = Pokemon.objects.filter(previous_evolution=pokemon)
+
+    for pokemon_next_evolution in pokemon_next_evolutions:
+        if not pokemon_next_evolution:
+            continue
+
+        pokemon_dict['next_evolution'] = {'title_ru': pokemon_next_evolution.title_ru,
+                                          'pokemon_id': pokemon_next_evolution.id,
+                                          'img_url': pokemon_next_evolution.img_url.url
                                           }
+        break
 
     return render(request, 'pokemon.html', context={'map': folium_map._repr_html_(),
                                                     'pokemon': pokemon_dict
