@@ -89,9 +89,6 @@ def show_pokemon(request, pokemon_id):
     pokemon_next_evolutions = pokemon.next_evolutions.all()
 
     for pokemon_next_evolution in pokemon_next_evolutions:
-        if not pokemon_next_evolution:
-            continue
-
         pokemon_dict['next_evolution'] = {'title_ru': pokemon_next_evolution.title_ru,
                                           'pokemon_id': pokemon_next_evolution.id,
                                           'img_url': pokemon_next_evolution.img_url.url
