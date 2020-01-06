@@ -24,14 +24,16 @@ class Pokemon(models.Model):
                                            on_delete=models.SET_NULL,
                                            null=True,
                                            blank=True,
-                                           verbose_name='Из кого эволюционировал')
+                                           verbose_name='Из кого эволюционировал',
+                                           related_name='next_evolutions'
+                                           )
 
     def __str__(self):
         return '{}'.format(self.title_ru)
 
 
 class PokemonEntity(models.Model):
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, verbose_name='Покемон')
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, verbose_name='Покемон', related_name='entities')
 
     lat = models.FloatField(verbose_name='Координата широты')
     lon = models.FloatField(verbose_name='Координата долготы')
